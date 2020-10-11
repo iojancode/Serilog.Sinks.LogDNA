@@ -17,7 +17,7 @@ log.Information("Processed {@Position} in {Elapsed:000} ms.", position, elapsedM
 
 Prints to LogDNA console:
 ```
-Oct 10 16:09:13 desktop-r9hnrih myapp Information Information Processed { Latitude: 25, Longitude: 134 } in 034 ms.
+Oct 10 16:09:13 desktop-r9hnrih myapp Information Processed { Latitude: 25, Longitude: 134 } in 034 ms.
 ```
 
 [![Nuget](https://img.shields.io/nuget/v/serilog.sinks.logdna.svg)](https://www.nuget.org/packages/Serilog.Sinks.LogDNA/)
