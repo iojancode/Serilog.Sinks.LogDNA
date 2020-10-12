@@ -14,10 +14,12 @@ namespace Serilog.Sinks.LogDNA
     {
         private static readonly JsonValueFormatter Instance = new JsonValueFormatter();
         private string _app;
+        private string _env;
 
-        public LogdnaTextFormatter(string app)
+        public LogdnaTextFormatter(string app, string env)
         {
             _app = app;
+            _env = env;
         }
 
         public void Format(LogEvent logEvent, TextWriter output)
@@ -48,8 +50,11 @@ namespace Serilog.Sinks.LogDNA
             output.Write("\",\"app\":\"");
             output.Write(_app);
 
-            //output.Write("\",\"MessageTemplate\":");
-            //JsonValueFormatter.WriteQuotedJsonString(logEvent.MessageTemplate.Text, output);
+            if (_env != null) 
+            {
+                output.Write("\",\"env\":\"");
+                output.Write(_env);                
+            }
 
             output.Write("\",\"line\":");
             var message = logEvent.MessageTemplate.Render(logEvent.Properties);
@@ -93,20 +98,5 @@ namespace Serilog.Sinks.LogDNA
                 logEvent.MessageTemplate.Text,
                 e);
         }
-
-        private static string GetLogLevelString(LogEventLevel logLevel)
-        {
-            switch (logLevel)
-            {
-                case LogEventLevel.Verbose: return "trce";
-                case LogEventLevel.Debug: return "dbug";
-                case LogEventLevel.Information: return "info";
-                case LogEventLevel.Warning: return "warn";
-                case LogEventLevel.Error: return "fail";
-                case LogEventLevel.Fatal: return "crit";
-                default: return logLevel.ToString();
-            }
-        }
-
     }
 }
