@@ -27,7 +27,8 @@ namespace Serilog
             ingestUrl += (ingestUrl.Contains("?") ? "&" : "?") + $"hostname={hostname ?? Dns.GetHostName().ToLower()}";
             if (commaSeparatedTags != null) ingestUrl += $"&tags={WebUtility.UrlEncode(commaSeparatedTags)}";
 
-            var envName = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? 
+            var envName = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ??
+                Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ??
                 Environment.GetEnvironmentVariable("ASPNET_ENVIRONMENT");
 
             return sinkConfiguration.Http(ingestUrl,
@@ -59,7 +60,8 @@ namespace Serilog
             ingestUrl += (ingestUrl.Contains("?") ? "&" : "?") + $"hostname={hostname ?? Dns.GetHostName().ToLower()}";
             if (commaSeparatedTags != null) ingestUrl += $"&tags={WebUtility.UrlEncode(commaSeparatedTags)}";
 
-            var envName = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? 
+            var envName = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ??
+                Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ??
                 Environment.GetEnvironmentVariable("ASPNET_ENVIRONMENT");
 
             return sinkConfiguration.DurableHttp(ingestUrl,
