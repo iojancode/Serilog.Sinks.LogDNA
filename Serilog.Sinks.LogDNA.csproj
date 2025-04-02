@@ -8,6 +8,7 @@
     <PackageIconUrl>http://serilog.net/images/serilog-sink-nuget.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/iojancode/Serilog.Sinks.LogDNA</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
     <Version>1.1.0</Version>
   </PropertyGroup>
 
