@@ -58,26 +58,30 @@ namespace Serilog.Sinks.LogDNA
 
             output.Write("\",\"line\":");
             var message = logEvent.MessageTemplate.Render(logEvent.Properties);
-            var exception = logEvent.Exception != null ? Environment.NewLine + logEvent.Exception : "";
-            JsonValueFormatter.WriteQuotedJsonString(message + exception, output);
+            JsonValueFormatter.WriteQuotedJsonString(message, output);
 
             if (logEvent.Properties.Count != 0)
             {
-                WriteProperties(logEvent.Properties, output);
+                WriteProperties(logEvent, output);
             }
 
             output.Write('}');
         }
 
-        private static void WriteProperties(
-            IReadOnlyDictionary<string, LogEventPropertyValue> properties,
-            TextWriter output)
+        private static void WriteProperties(LogEvent logEvent, TextWriter output)
         {
             output.Write(",\"meta\":{");
 
             var precedingDelimiter = "";
 
-            foreach (var property in properties)
+            if (logEvent.Exception != null)
+            {
+                output.Write("\"Exception\":");
+                JsonValueFormatter.WriteQuotedJsonString(logEvent.Exception.ToString(), output);
+                precedingDelimiter = ",";
+            }
+
+            foreach (var property in logEvent.Properties)
             {
                 output.Write(precedingDelimiter);
                 precedingDelimiter = ",";

@@ -13,10 +13,10 @@ namespace Serilog
             string apiKey,
             string appName = null,
             string commaSeparatedTags = null,
-            string ingestUrl = "https://logs.logdna.com/logs/ingest",
+            string ingestUrl = "https://logs.mezmo.com/logs/ingest",
             string hostname = null,
-            int? batchPostingLimit = null,
-            int? queueLimit = null,
+            long? queueLimitBytes = null,
+            int? logEventsInBatchLimit = null,
             TimeSpan? period = null,
             LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum)
         {
@@ -31,9 +31,11 @@ namespace Serilog
                 Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ??
                 Environment.GetEnvironmentVariable("ASPNET_ENVIRONMENT");
 
-            return sinkConfiguration.Http(ingestUrl,
-                batchPostingLimit: batchPostingLimit ?? 50,
-                queueLimit: queueLimit ?? 100,
+            return sinkConfiguration.Http(
+                requestUri: ingestUrl,
+                queueLimitBytes: queueLimitBytes,
+                logEventsInBatchLimit: logEventsInBatchLimit ?? 100,
+                batchSizeLimitBytes: 5000000, // max 10MB per request, extra characters for json not included 
                 period: period ?? TimeSpan.FromSeconds(15),
                 textFormatter: new LogdnaTextFormatter(appName ?? "unknown", envName),
                 batchFormatter: new LogdnaBatchFormatter(),
@@ -46,10 +48,10 @@ namespace Serilog
             string apiKey,
             string appName = null,
             string commaSeparatedTags = null,
-            string ingestUrl = "https://logs.logdna.com/logs/ingest",
+            string ingestUrl = "https://logs.mezmo.com/logs/ingest",
             string hostname = null,
-            int? batchPostingLimit = null,
-            string bufferPathFormat = "logdna-buffer-{Date}.json",
+            long? bufferFileSizeLimitBytes = null,
+            int? logEventsInBatchLimit = null,
             TimeSpan? period = null,
             LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum)
         {
@@ -64,9 +66,12 @@ namespace Serilog
                 Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ??
                 Environment.GetEnvironmentVariable("ASPNET_ENVIRONMENT");
 
-            return sinkConfiguration.DurableHttp(ingestUrl,
-                bufferPathFormat: bufferPathFormat,
-                batchPostingLimit: batchPostingLimit ?? 50,
+            return sinkConfiguration.DurableHttpUsingFileSizeRolledBuffers(
+                requestUri: ingestUrl,
+                bufferBaseFileName: "logdna-buffer",
+                bufferFileSizeLimitBytes: bufferFileSizeLimitBytes,
+                logEventsInBatchLimit: logEventsInBatchLimit ?? 100,
+                batchSizeLimitBytes: 5000000, // max 10MB per request, extra characters for json not included 
                 period: period ?? TimeSpan.FromSeconds(15),
                 textFormatter: new LogdnaTextFormatter(appName ?? "unknown", envName),
                 batchFormatter: new LogdnaBatchFormatter(),

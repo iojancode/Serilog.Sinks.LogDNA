@@ -27,8 +27,11 @@ bld/
 
 # IDE directories
 .vs/
-.vscode/
 .idea/
 
 # .NET core
 project.lock.json
+
+# OS
+.DS_Store
+Thumbs.db

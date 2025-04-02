@@ -2,23 +2,22 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Serilog.Sinks.Http.BatchFormatters;
+using Serilog.Sinks.Http;
 
 namespace Serilog.Sinks.LogDNA
 {
-    class LogdnaBatchFormatter : BatchFormatter
+    class LogdnaBatchFormatter : IBatchFormatter
     {
-        public LogdnaBatchFormatter(long? eventBodyLimitBytes = 256 * 1024)
-            : base(eventBodyLimitBytes)
-        {
-        }
-
-        public override void Format(IEnumerable<string> logEvents, TextWriter output)
+        public void Format(IEnumerable<string> logEvents, TextWriter output)
         {
             if (logEvents == null) throw new ArgumentNullException(nameof(logEvents));
             if (output == null) throw new ArgumentNullException(nameof(output));
 
-            if (!logEvents.Any()) return; // abort
+            // Abort if sequence of log events is empty
+            if (!logEvents.Any())
+            {
+                return;
+            }
 
             output.Write("{\"lines\":[");
 
@@ -26,17 +25,17 @@ namespace Serilog.Sinks.LogDNA
 
             foreach (var logEvent in logEvents)
             {
-                if (string.IsNullOrWhiteSpace(logEvent)) continue; 
-
-                if (CheckEventBodySize(logEvent))
+                if (string.IsNullOrWhiteSpace(logEvent))
                 {
-                    output.Write(delimStart);
-                    output.Write(logEvent);
-                    delimStart = ",";
+                    continue;
                 }
+
+                output.Write(delimStart);
+                output.Write(logEvent);
+                delimStart = ",";
             }
 
-            output.Write("]}");
+            output.Write("]}");            
         }
     }
 }

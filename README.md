@@ -1,11 +1,12 @@
 # Serilog.Sinks.LogDNA #
 
-Serilog Sink that sends log events to LogDNA https://logdna.com
+Serilog Sink that sends log events to LogDNA <https://logdna.com>
 
-**Package** - [Serilog.Sinks.LogDNA](http://nuget.org/packages/serilog.sinks.logdna) | **Platforms** - .NET 4.5, netstandard2.0
+**Package** - [Serilog.Sinks.LogDNA](http://nuget.org/packages/serilog.sinks.logdna) | **Platforms** - netstandard2.0, .NET Framework 4.6.2
 
 Example:
-```csharp
+
+``` csharp
 var log = new LoggerConfiguration()
     .WriteTo.LogDNA(apiKey: "<API_KEY>", appName: "myapp")
     .CreateLogger();
@@ -16,7 +17,8 @@ log.Information("Processed {@Position} in {Elapsed:000} ms.", position, elapsedM
 ```
 
 Prints to LogDNA console:
-```
+
+``` plaintext
 Oct 10 16:09:13 desktop-r9hnrih myapp Information Processed { Latitude: 25, Longitude: 134 } in 034 ms.
 ```
 
