@@ -60,16 +60,15 @@ namespace Serilog.Sinks.LogDNA
             var message = logEvent.MessageTemplate.Render(logEvent.Properties);
             JsonValueFormatter.WriteQuotedJsonString(message, output);
 
-            if (logEvent.Properties.Count != 0)
-            {
-                WriteProperties(logEvent, output);
-            }
+            WriteMetaObject(logEvent, output);
 
             output.Write('}');
         }
 
-        private static void WriteProperties(LogEvent logEvent, TextWriter output)
+        private static void WriteMetaObject(LogEvent logEvent, TextWriter output)
         {
+            if (logEvent.Properties.Count == 0 && logEvent.Exception == null) return;
+
             output.Write(",\"meta\":{");
 
             var precedingDelimiter = "";
