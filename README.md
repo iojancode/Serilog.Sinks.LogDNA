@@ -2,7 +2,7 @@
 
 Serilog Sink that sends log events to LogDNA <https://logdna.com>
 
-**Package** - [Serilog.Sinks.LogDNA](http://nuget.org/packages/serilog.sinks.logdna) | **Platforms** - netstandard2.0, .NET Framework 4.6.2
+**Package** - [Serilog.Sinks.LogDNA](http://nuget.org/packages/serilog.sinks.logdna) | **Platforms** - netstandard2.0, .NET Framework 4.6.2+
 
 Example:
 
