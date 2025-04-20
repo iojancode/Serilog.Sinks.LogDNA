@@ -1,6 +1,6 @@
 # Serilog.Sinks.LogDNA #
 
-Serilog Sink that sends log events to LogDNA <https://logdna.com>
+Serilog Sink that sends log events to Mezmo <https://mezmo.com> (formerly LogDNA)
 
 **Package** - [Serilog.Sinks.LogDNA](http://nuget.org/packages/serilog.sinks.logdna) | **Platforms** - netstandard2.0, .NET Framework 4.6.2+
 
@@ -16,7 +16,7 @@ var elapsedMs = 34;
 log.Information("Processed {@Position} in {Elapsed:000} ms.", position, elapsedMs);
 ```
 
-Prints to LogDNA console:
+Prints to Mezmo console:
 
 ``` plaintext
 Oct 10 16:09:13 desktop-r9hnrih myapp Information Processed { Latitude: 25, Longitude: 134 } in 034 ms.

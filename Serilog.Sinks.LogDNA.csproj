@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-    <Description>Serilog Sink that sends log events to LogDNA https://logdna.com</Description>
+    <Description>Serilog Sink that sends log events to Mezmo https://mezmo.com (formerly LogDNA)</Description>
     <PackageId>Serilog.Sinks.LogDNA</PackageId>
-    <PackageTags>logdna;serilog;sink;logging</PackageTags>
+    <PackageTags>mezmo;logdna;serilog;sink;logging</PackageTags>
     <PackageIconUrl>http://serilog.net/images/serilog-sink-nuget.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/iojancode/Serilog.Sinks.LogDNA</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
